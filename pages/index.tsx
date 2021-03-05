@@ -1,9 +1,10 @@
 import React from 'react';
-import {Button} from "@material-ui/core";
+import Navbar from "../components/Navbar";
 
 const Index = () => {
     return (
         <>
+            <Navbar/>
             <div className='center'>
                 <h1>Welcome</h1>
                 <h3>This is the best music collection</h3>
