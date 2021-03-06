@@ -1,8 +1,8 @@
 import React from 'react';
 import {ITrack} from "../types/track";
 import styles from '../styles/TrackItem.module.scss'
-import {Card, Grid, IconButton} from "@material-ui/core";
-import {Pause, PlayArrow} from "@material-ui/icons";
+import {Card, Grid, Icon, IconButton} from "@material-ui/core";
+import {Delete, Pause, PlayArrow} from "@material-ui/icons";
 
 interface TrackItemProps {
     track: ITrack;
@@ -23,7 +23,10 @@ const TrackItem: React.FC<TrackItemProps> = ({track, active = false}) => {
                 <div>{track.name}</div>
                 <div style={{fontSize: 12, color: 'gray'}}>{track.artist}</div>
             </Grid>
-            {track.name}
+            {active && <div>02:42 / 03:22</div>}
+            <IconButton style={{marginLeft: 'auto'}}>
+                <Delete/>
+            </IconButton>
         </Card>
     );
 };
