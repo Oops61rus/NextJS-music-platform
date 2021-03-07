@@ -19,11 +19,19 @@ const TrackPage = () => {
 
     return (
         <MainLayout>
-            <Button variant={'outlined'} style={{fontSize: 32}} onClick={() => router.push('/tracks')}>
+            <Button
+                variant={'outlined'}
+                style={{fontSize: 32}}
+                onClick={() => router.push('/tracks')}
+            >
                 To List
             </Button>
             <Grid container style={{margin: '20px 0'}}>
-                <img src={track.picture} width={200} height={200}/>
+                <img
+                    src={'http://localhost:4000/' + track.picture}
+                    width={200}
+                    height={200}
+                />
                 <div style={{marginLeft: 30}}>
                     <h1>Track name: {track.name}</h1>
                     <h1>Artist: {track.artist}</h1>

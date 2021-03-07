@@ -1,5 +1,5 @@
-import * as PlayerActiveCreators from './player'
+import * as PlayerActionCreators from './player'
 
 export default {
-    ...PlayerActiveCreators
+    ...PlayerActionCreators
 }
