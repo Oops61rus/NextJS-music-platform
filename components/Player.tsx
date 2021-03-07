@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Card, Grid, IconButton} from "@material-ui/core";
 import {Pause, PlayArrow, VolumeUp} from "@material-ui/icons";
 import styles from '../styles/Player.module.scss'
 import {ITrack} from "../types/track";
 import TrackProgress from "./TrackProgress";
+import {useTypedSelector} from "../hooks/useTypedSelector";
+import {useActions} from "../hooks/useActions";
+
+let audio;
 
 const Player = () => {
     const track: ITrack = {
@@ -16,14 +20,32 @@ const Player = () => {
         picture: 'http://localhost:4000/picture/1.jpg',
         comments: []
     }
-    const active = false
+    const {pause, volume, duration, currentTime, active} = useTypedSelector(state => state.player)
+    const {pauseTrack, playTrack} = useActions()
+
+    useEffect(() => {
+        if(!audio) {
+            audio = new Audio()
+            audio.src = track.audio
+        }
+    }, [])
+
+    const play = () => {
+        if(pause) {
+            playTrack()
+            audio.play()
+        } else {
+            pauseTrack()
+            audio.pause()
+        }
+    }
 
     return (
         <div className={styles.player}>
-            <IconButton onClick={e => e.stopPropagation()}>
-                {active
-                    ? <Pause/>
-                    : <PlayArrow/>
+            <IconButton onClick={play}>
+                {pause
+                    ? <PlayArrow/>
+                    : <Pause/>
                 }
             </IconButton>
             <Grid container direction='column' style={{width: 200, margin: '0 20px'}}>
