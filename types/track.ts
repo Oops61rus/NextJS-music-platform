@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface IComment {
     _id: string;
     username: string;
@@ -37,3 +39,8 @@ interface FetchTracksErrorAction {
 }
 
 export type TrackAction = FetchTracksAction | FetchTracksErrorAction
+
+export interface TrackParams {
+    value: string,
+    onChange: (e: React.ChangeEvent) => void
+}
