@@ -2,43 +2,20 @@ import React from 'react';
 import MainLayout from "../../layouts/MainLayout";
 import {Box, Button, Card, Grid} from "@material-ui/core";
 import {useRouter} from "next/router";
-import {ITrack} from "../../types/track";
 import TrackList from "../../components/TrackList";
+import {useTypedSelector} from "../../hooks/useTypedSelector";
+import {NextThunkDispatch, wrapper} from "../../store";
+import {fetchTracks} from "../../store/actions/track";
 
 const Index = () => {
     const router = useRouter()
-    const tracks: ITrack[] = [
-        {
-            _id: '1',
-            name: 'Track 1',
-            artist: 'Artist 1',
-            text: 'Some text',
-            listens: 5,
-            audio: 'http://localhost:4000/audio/1.mp3',
-            picture: 'http://localhost:4000/picture/1.jpg',
-            comments: []
-        },
-        {
-            _id: '2',
-            name: 'Track 2',
-            artist: 'Artist 2',
-            text: 'Some text',
-            listens: 5,
-            audio: 'http://localhost:4000/audio/2.mp3',
-            picture: 'http://localhost:4000/picture/2.jpg',
-            comments: []
-        },
-        {
-            _id: '3',
-            name: 'Track 3',
-            artist: 'Artist 3',
-            text: 'Some text',
-            listens: 5,
-            audio: 'http://localhost:4000/audio/3.mp3',
-            picture: 'http://localhost:4000/picture/3.jpg',
-            comments: []
-        },
-    ]
+    const {tracks, error} = useTypedSelector(state => state.track)
+
+    if(error) {
+        return <MainLayout>
+            <h1>{error}</h1>
+        </MainLayout>
+    }
 
     return (
         <MainLayout>
@@ -60,3 +37,8 @@ const Index = () => {
 };
 
 export default Index;
+
+export const getServerSideProps = wrapper.getServerSideProps(async ({store}) => {
+    const dispatch = store.dispatch as NextThunkDispatch
+    await dispatch(await fetchTracks())
+})
